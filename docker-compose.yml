@@ -1,0 +1,84 @@
+# Full stack: docker compose up --build
+#   Portal UI  -> http://localhost:4173   (UI_PORT)
+#   API        -> http://localhost:3000   (API_PORT)
+#   RabbitMQ   -> http://localhost:15673  (RABBITMQ_UI_PORT, guest/guest)
+# Host ports can be overridden via env vars or a .env file next to this file.
+
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: pseudonymization
+    # Internal only (5432 is often taken on the host). To expose: ports: ['5433:5432']
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres -d pseudonymization']
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    # AMQP (5672) stays internal; the worker reaches it over the compose network.
+    ports:
+      - '${RABBITMQ_UI_PORT:-15673}:15672'
+    healthcheck:
+      test: ['CMD', 'rabbitmq-diagnostics', '-q', 'ping']
+      interval: 10s
+      timeout: 10s
+      retries: 20
+
+  api:
+    build:
+      context: ./nest-pseudonymization
+    image: pseudonymization-api
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      PORT: 3000
+      # Not used yet: reserved for the planned Postgres-backed store
+      DATABASE_URL: 'postgresql://postgres:postgres@postgres:5432/pseudonymization'
+      HMAC_SECRET: ${HMAC_SECRET:-dev_dummy_secret}
+    ports:
+      - '${API_PORT:-3000}:3000'
+    healthcheck:
+      test: ['CMD', 'node', '-e', "fetch('http://localhost:3000/admin/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+
+  worker:
+    build:
+      context: ./nest-pseudonymization
+    image: pseudonymization-api
+    command: ['node', 'workers/rabbit-worker.js']
+    depends_on:
+      api:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    environment:
+      RABBIT_URL: 'amqp://guest:guest@rabbitmq:5672'
+      API_BASE: 'http://api:3000/pseudonymization'
+    restart: unless-stopped
+
+  portal-ui:
+    build:
+      context: ./portal-ui
+    depends_on:
+      api:
+        condition: service_healthy
+    ports:
+      - '${UI_PORT:-4173}:4173'
+    restart: unless-stopped
+
+volumes:
+  pgdata:
