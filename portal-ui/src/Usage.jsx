@@ -8,13 +8,15 @@ const RANGES = [
 ];
 
 // Fixed series order -> fixed colors (validated categorical slots 1 and 2)
-const SERIES = [
+export const SERIES = [
   { key: 'anonymize', label: 'Anonymized', color: 'var(--series-1)' },
   { key: 'deanonymize', label: 'Deanonymized', color: 'var(--series-2)' },
 ];
 
 const REFRESH_MS = 15_000;
 const fmt = (n) => n.toLocaleString();
+// Axis ticks: 1,500 → 1.5K, 150,000 → 150K, so labels fit the chart margin
+const compact = new Intl.NumberFormat('en', { notation: 'compact', maximumFractionDigits: 1 });
 
 export default function Usage({ apiBase }) {
   const [range, setRange] = useState('24h');
@@ -157,7 +159,7 @@ function topRoundedRect(x, y, w, h, r) {
   return `M${x},${y + h}V${y + rr}Q${x},${y} ${x + rr},${y}H${x + w - rr}Q${x + w},${y} ${x + w},${y + rr}V${y + h}Z`;
 }
 
-function StackedBars({ data }) {
+export function StackedBars({ data, height = 260 }) {
   const wrapRef = useRef(null);
   const [width, setWidth] = useState(800);
   const [hover, setHover] = useState(null);
@@ -172,7 +174,6 @@ function StackedBars({ data }) {
 
   const series = data.series;
   const n = series.length;
-  const height = 260;
   const m = { top: 12, right: 8, bottom: 28, left: 44 };
   const iw = width - m.left - m.right;
   const ih = height - m.top - m.bottom;
@@ -224,7 +225,7 @@ function StackedBars({ data }) {
           <g key={tv}>
             <line x1={m.left} x2={width - m.right} y1={y(tv)} y2={y(tv)} className={tv === 0 ? 'axis-line' : 'grid-line'} />
             <text x={m.left - 8} y={y(tv)} dy="0.32em" textAnchor="end" className="axis-text">
-              {tv.toLocaleString()}
+              {compact.format(tv)}
             </text>
           </g>
         ))}

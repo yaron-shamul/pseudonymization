@@ -6,7 +6,7 @@ export class TokenGenerator {
   private tokenLength: number;
 
   constructor(hmacSecret = process.env.PSEUDONYMIZATION_SECRET || '') {
-    this.hmacSecret = hmacSecret || (process.env.PSEUDONYMIZATION_SECRET || '');
+    this.hmacSecret = hmacSecret || process.env.PSEUDONYMIZATION_SECRET || '';
     const configuredLength = PSEUDONYMIZATION_SETTINGS.token_length || 7;
     this.tokenLength = configuredLength;
   }
@@ -15,7 +15,12 @@ export class TokenGenerator {
     return `${fieldName.toUpperCase()}_`;
   }
 
-  generateToken(fieldName: string, fieldValue: string, identityHash: string, prefix?: string): string {
+  generateToken(
+    fieldName: string,
+    fieldValue: string,
+    identityHash: string,
+    prefix?: string,
+  ): string {
     const tokenInput = `${identityHash}|${fieldName}|${fieldValue}`;
     const hmac = CryptoUtils.hmacSha256(this.hmacSecret, tokenInput);
     const suffix = hmac.slice(0, this.tokenLength).toUpperCase();

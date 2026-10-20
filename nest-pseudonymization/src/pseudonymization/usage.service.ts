@@ -21,9 +21,15 @@ export const USAGE_RANGES = {
 } as const;
 export type UsageRange = keyof typeof USAGE_RANGES;
 
-const empty = (): Counts => ({ anonymize: 0, deanonymize: 0, fields: 0, requests: 0, errors: 0 });
+const empty = (): Counts => ({
+  anonymize: 0,
+  deanonymize: 0,
+  fields: 0,
+  requests: 0,
+  errors: 0,
+});
 
-/** Per-minute API usage counters. In memory for now (reset on restart); moves to Postgres with the DB store. */
+/** Per-minute API usage counters. In memory (reset on restart). */
 @Injectable()
 export class UsageService {
   private minutes = new Map<number, Counts>();
@@ -47,7 +53,10 @@ export class UsageService {
     const end = Math.floor(Date.now() / size) * size; // start of the current bucket
     const start = end - (buckets - 1) * size;
 
-    const series = Array.from({ length: buckets }, (_, i) => ({ t: new Date(start + i * size).toISOString(), ...empty() }));
+    const series = Array.from({ length: buckets }, (_, i) => ({
+      t: new Date(start + i * size).toISOString(),
+      ...empty(),
+    }));
     const totals = empty();
     for (const [minute, counts] of this.minutes) {
       const ts = minute * MINUTE;

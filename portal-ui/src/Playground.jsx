@@ -17,6 +17,8 @@ import {
   XIcon,
 } from './icons.jsx';
 import { parseCsv, toCsv, downloadFile } from './csv.js';
+import { isToken, highlightJson, escapeHtml } from './json.js';
+import JsonEditor, { locateJsonError } from './JsonEditor.jsx';
 
 export const SAMPLES = {
   customers: {
@@ -51,26 +53,6 @@ const JSON_PREVIEW = 50; // results shown in the JSON view
 const MAX_FILE_MB = 50;
 const PRESETS_KEY = 'pseudonym.presets.v1';
 
-const TOKEN_RE = /^[A-Za-z0-9]+(?:_[A-Za-z0-9]+)*_[0-9A-F]{7}$/;
-export const isToken = (v) => typeof v === 'string' && TOKEN_RE.test(v);
-
-const escapeHtml = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-
-export function highlightJson(value) {
-  const json = typeof value === 'string' ? value : JSON.stringify(value, null, 2);
-  return escapeHtml(json ?? '').replace(
-    /("(?:\\.|[^"\\])*")(\s*:)?|\b(true|false|null)\b|(-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?)/g,
-    (m, str, colon, bool, num) => {
-      if (str) {
-        if (colon) return `<span class="k">${str}</span>${colon}`;
-        return `<span class="${isToken(str.slice(1, -1)) ? 't' : 's'}">${str}</span>`;
-      }
-      if (bool) return `<span class="b">${bool}</span>`;
-      return `<span class="n">${num}</span>`;
-    }
-  );
-}
-
 function validateRecords(value) {
   const records = Array.isArray(value) ? value : [value];
   if (!records.length) return { ok: false, error: 'Array is empty' };
@@ -81,11 +63,16 @@ function validateRecords(value) {
 }
 
 function parseData(text) {
+  let value;
   try {
-    return validateRecords(JSON.parse(text));
+    value = JSON.parse(text);
   } catch (e) {
-    return { ok: false, error: e.message };
+    const loc = locateJsonError(text);
+    return loc
+      ? { ok: false, error: `Line ${loc.line}, column ${loc.col}: ${loc.message}`, line: loc.line }
+      : { ok: false, error: e.message };
   }
+  return validateRecords(value);
 }
 
 const unionKeys = (records) => {
@@ -113,7 +100,7 @@ function savePresets(list) {
   }
 }
 
-export default function Playground({ apiBase, onResult, notify }) {
+export default function Playground({ apiBase, onResult, notify, prefill }) {
   const [mode, setMode] = useState('anonymize');
   const [dataText, setDataText] = useState(pretty(SAMPLES.customers.data));
   const [file, setFile] = useState(null); // { name, format: 'csv' | 'json', columns, records }
@@ -137,9 +124,29 @@ export default function Playground({ apiBase, onResult, notify }) {
   );
   const keys = useMemo(() => (file ? file.columns : parsed.ok ? unionKeys(parsed.records) : []), [file, parsed]);
 
-  const lineCount = file ? 0 : dataText.split('\n').length;
   const activeFields = keys.filter((k) => selected.has(k) && k !== idField);
   const batched = parsed.ok && parsed.isArray && parsed.records.length > CHUNK_SIZE;
+
+  // "Reproduce" from the activity log: load the failed request exactly as it was sent
+  useEffect(() => {
+    if (!prefill) return;
+    const { action, data, fields, idField: idf } = prefill.request.body ?? {};
+    const spec = fields && typeof fields === 'object' ? fields : null;
+    setFile(null);
+    setResult(null);
+    setMode(action === 'deanonymize' ? 'deanonymize' : 'anonymize');
+    setDataText(data === undefined ? '' : pretty(data));
+    setSelected(new Set(spec ? (Array.isArray(spec) ? spec : Object.keys(spec)).filter((f) => typeof f === 'string') : []));
+    setPrefixes(
+      spec && !Array.isArray(spec)
+        ? Object.fromEntries(Object.entries(spec).flatMap(([f, c]) => (typeof c?.prefix === 'string' ? [[f, c.prefix]] : [])))
+        : {},
+    );
+    setShowPrefixes(!!spec && !Array.isArray(spec) && Object.values(spec).some((c) => typeof c?.prefix === 'string'));
+    setIdField(typeof idf === 'string' && idf ? idf : 'id');
+    const note = action === 'anonymize' || action === 'deanonymize' ? '' : ` Its action (${JSON.stringify(action ?? null)}) wasn’t valid, so anonymize is selected.`;
+    notify(`Loaded failed request #${prefill.id}.${note}`);
+  }, [prefill]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const loadSample = (key) => {
     const s = SAMPLES[key];
@@ -226,24 +233,26 @@ export default function Playground({ apiBase, onResult, notify }) {
 
   /* ---------- Send ---------- */
 
+  // Request body minus `data`: { action, fields, idField? } — see POST /pseudonymization
   const buildOptions = () => {
-    const opts = {};
-    if (activeFields.length) {
-      const custom = activeFields.some((f) => prefixes[f]?.trim());
-      opts.fields = custom
+    // Prefixes only matter when creating tokens
+    const custom = mode === 'anonymize' && activeFields.some((f) => prefixes[f]?.trim());
+    const opts = {
+      action: mode,
+      fields: custom
         ? Object.fromEntries(activeFields.map((f) => [f, prefixes[f]?.trim() ? { prefix: prefixes[f].trim() } : true]))
-        : activeFields;
-    }
+        : activeFields,
+    };
     if (idField && idField !== 'id') opts.idField = idField;
     return opts;
   };
 
-  const canSend = parsed.ok && !sending && (mode === 'deanonymize' || activeFields.length > 0);
+  const canSend = parsed.ok && !sending && activeFields.length > 0;
 
   const post = async (path, body) => {
     const res = await fetch(`${apiBase}${path}`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'X-Client': 'portal' },
       body: JSON.stringify(body),
     });
     const text = await res.text();
@@ -259,7 +268,7 @@ export default function Playground({ apiBase, onResult, notify }) {
   const send = async () => {
     if (!canSend) return;
     const options = buildOptions();
-    const path = `/pseudonymization/${mode}`;
+    const path = '/pseudonymization';
     const records = parsed.records;
     setSending(true);
     const started = performance.now();
@@ -281,7 +290,7 @@ export default function Playground({ apiBase, onResult, notify }) {
           }
           merged.push(...r.payload);
         }
-        entry ??= { status: 201, ok: true, payload: merged };
+        entry ??= { status: 200, ok: true, payload: merged };
       }
     } catch (e) {
       entry = { status: 'Network error', ok: false, payload: { message: e.message } };
@@ -449,20 +458,7 @@ export default function Playground({ apiBase, onResult, notify }) {
             <FileCard file={file} onReplace={() => fileInput.current?.click()} onRemove={() => setFile(null)} />
           ) : (
             <>
-              <div className={`editor${parsed.ok ? '' : ' invalid'}`}>
-                <div className="gutter" aria-hidden="true">
-                  {Array.from({ length: Math.min(lineCount, 2000) }, (_, i) => (
-                    <div key={i}>{i + 1}</div>
-                  ))}
-                </div>
-                <textarea
-                  value={dataText}
-                  onChange={(e) => setDataText(e.target.value)}
-                  spellCheck={false}
-                  rows={Math.min(Math.max(lineCount, 14), 26)}
-                  aria-label="JSON data"
-                />
-              </div>
+              <JsonEditor value={dataText} onChange={setDataText} errorLine={parsed.ok ? null : parsed.line ?? null} />
               <div className="editor-status">
                 {parsed.ok ? (
                   <>
@@ -521,11 +517,11 @@ export default function Playground({ apiBase, onResult, notify }) {
             <div className="hint">Enter valid JSON to detect fields.</div>
           )}
           <div className="hint" style={{ marginTop: 10 }}>
-            {mode === 'anonymize'
-              ? 'Selected fields are replaced with deterministic, identity-scoped tokens.'
-              : activeFields.length
-                ? 'Only the selected fields will be restored.'
-                : 'No fields selected — every token in the record will be restored.'}
+            {!activeFields.length
+              ? `Select at least one field to ${mode}.`
+              : mode === 'anonymize'
+                ? 'Selected fields are replaced with deterministic, identity-scoped tokens.'
+                : 'Tokens in the selected fields are restored to their original values.'}
           </div>
 
           <div className="presets">
@@ -618,7 +614,7 @@ export default function Playground({ apiBase, onResult, notify }) {
         <div className="section">
           <div className="row" style={{ justifyContent: 'space-between', flexWrap: 'wrap' }}>
             <span className="hint mono">
-              POST /pseudonymization/{mode}
+              POST /pseudonymization · action: {mode}
               {batched && ` · ${Math.ceil(parsed.records.length / CHUNK_SIZE)} batches of ${CHUNK_SIZE}`}
             </span>
             <button className="btn btn-primary btn-lg" onClick={send} disabled={!canSend}>
@@ -804,7 +800,7 @@ function KeyGlyph() {
   );
 }
 
-function CodeBlock({ html, onCopy }) {
+export function CodeBlock({ html, onCopy }) {
   const [copied, setCopied] = useState(false);
   return (
     <div style={{ position: 'relative' }}>

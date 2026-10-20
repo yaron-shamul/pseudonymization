@@ -2,7 +2,11 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InMemoryMappingRepository } from './repository.js';
 import { TokenGenerator } from './token-generator.js';
 import { CryptoUtils } from './crypto.utils.js';
-import { PSEUDONYMIZATION_SETTINGS, HMAC_SECRET, DEFAULT_ID_FIELD } from './config.js';
+import {
+  PSEUDONYMIZATION_SETTINGS,
+  HMAC_SECRET,
+  DEFAULT_ID_FIELD,
+} from './config.js';
 import { AnonymizationResult, DeanonymizationResult } from './models.js';
 
 export interface FieldConfig {
@@ -44,10 +48,16 @@ export class PseudonymizationService {
     if (this.enableEncryption) CryptoUtils.deriveKey(this.hmacSecret);
   }
 
-  anonymize(obj: Record<string, any>, fields: FieldsSpec, options: PseudonymizationOptions = {}): AnonymizationResult {
+  anonymize(
+    obj: Record<string, any>,
+    fields: FieldsSpec,
+    options: PseudonymizationOptions = {},
+  ): AnonymizationResult {
     const resolved = this.resolveFields(fields);
     if (resolved.size === 0) {
-      throw new BadRequestException('`fields` must list at least one field to pseudonymize');
+      throw new BadRequestException(
+        '`fields` must list at least one field to anonymize',
+      );
     }
     this.assertRecord(obj);
 
@@ -63,13 +73,21 @@ export class PseudonymizationService {
       if (!fieldCfg) continue;
       if (fieldValue == null) continue;
 
-      const token = this.tokenGenerator.generateToken(fieldName, String(fieldValue), identityHash, fieldCfg.prefix);
+      const token = this.tokenGenerator.generateToken(
+        fieldName,
+        String(fieldValue),
+        identityHash,
+        fieldCfg.prefix,
+      );
       const originalValueHash = CryptoUtils.sha256Hash(String(fieldValue));
 
       let encryptedValue: string | null = null;
       if (this.enableEncryption) {
         try {
-          const { nonce, ciphertext } = CryptoUtils.encryptAes256Gcm(String(fieldValue), this.hmacSecret);
+          const { nonce, ciphertext } = CryptoUtils.encryptAes256Gcm(
+            String(fieldValue),
+            this.hmacSecret,
+          );
           encryptedValue = `${nonce}:${ciphertext}`;
         } catch {
           // ignore
@@ -91,20 +109,26 @@ export class PseudonymizationService {
       anonymized[fieldName] = token;
     }
 
-    return { anonymized_object: anonymized, identity_hash: identityHash, mappings };
+    return {
+      anonymized_object: anonymized,
+      identity_hash: identityHash,
+      mappings,
+    };
   }
 
-  /**
-   * Restores tokens back to original values. When `fields` is given, only those fields are
-   * restored; otherwise every value that looks like a token is resolved.
-   */
+  /** Restores the tokens in the given fields back to their original values. */
   deanonymize(
     anonymizedObj: Record<string, any>,
-    fields?: FieldsSpec,
+    fields: FieldsSpec,
     options: PseudonymizationOptions = {},
   ): DeanonymizationResult {
+    const restrictTo = this.resolveFields(fields);
+    if (restrictTo.size === 0) {
+      throw new BadRequestException(
+        '`fields` must list at least one field to deanonymize',
+      );
+    }
     this.assertRecord(anonymizedObj);
-    const restrictTo = fields !== undefined && fields !== null ? this.resolveFields(fields) : null;
 
     const deanonymized = { ...anonymizedObj };
     const mappingsUsed: Record<string, any> = {};
@@ -114,12 +138,15 @@ export class PseudonymizationService {
     const identityHashContext = CryptoUtils.createIdentityHash(objectId);
 
     for (const [fieldName, fieldValue] of Object.entries(anonymizedObj)) {
-      if (restrictTo && !restrictTo.has(fieldName)) continue;
+      if (!restrictTo.has(fieldName)) continue;
       if (typeof fieldValue !== 'string') continue;
       if (!this.tokenGenerator.isValidToken(fieldValue)) continue;
 
       // Lookup is scoped to this record's identity, so a token from another ID never resolves here
-      const mapping = this.repository.getByToken(fieldValue, identityHashContext);
+      const mapping = this.repository.getByToken(
+        fieldValue,
+        identityHashContext,
+      );
       if (!mapping) {
         // token not found for this identity -> leave as-is
         continue;
@@ -128,8 +155,14 @@ export class PseudonymizationService {
       let originalValue = mapping.original_value;
       if (mapping.encrypted_value && this.enableEncryption) {
         try {
-          const [nonce, ciphertext] = (mapping.encrypted_value as string).split(':');
-          originalValue = CryptoUtils.decryptAes256Gcm(nonce, ciphertext, this.hmacSecret);
+          const [nonce, ciphertext] = (mapping.encrypted_value as string).split(
+            ':',
+          );
+          originalValue = CryptoUtils.decryptAes256Gcm(
+            nonce,
+            ciphertext,
+            this.hmacSecret,
+          );
         } catch {
           // ignore, fall back to stored original_value
         }
@@ -140,14 +173,26 @@ export class PseudonymizationService {
     }
 
     const identityHash = Object.values(mappingsUsed)[0]?.identity_hash ?? null;
-    return { deanonymized_object: deanonymized, identity_hash: identityHash, mappings_used: mappingsUsed };
+    return {
+      deanonymized_object: deanonymized,
+      identity_hash: identityHash,
+      mappings_used: mappingsUsed,
+    };
   }
 
-  anonymizeBatch(objects: Record<string, any>[], fields: FieldsSpec, options?: PseudonymizationOptions) {
+  anonymizeBatch(
+    objects: Record<string, any>[],
+    fields: FieldsSpec,
+    options?: PseudonymizationOptions,
+  ) {
     return objects.map((o) => this.anonymize(o, fields, options));
   }
 
-  deanonymizeBatch(objects: Record<string, any>[], fields?: FieldsSpec, options?: PseudonymizationOptions) {
+  deanonymizeBatch(
+    objects: Record<string, any>[],
+    fields: FieldsSpec,
+    options?: PseudonymizationOptions,
+  ) {
     return objects.map((o) => this.deanonymize(o, fields, options));
   }
 
@@ -165,14 +210,18 @@ export class PseudonymizationService {
   private resolveFields(fields: FieldsSpec): ResolvedFields {
     const resolved: ResolvedFields = new Map();
     const add = (name: string, prefix?: string) => {
-      const p = prefix?.trim() ? prefix.trim() : TokenGenerator.defaultPrefix(name);
+      const p = prefix?.trim()
+        ? prefix.trim()
+        : TokenGenerator.defaultPrefix(name);
       resolved.set(name, { prefix: p.endsWith('_') ? p : `${p}_` });
     };
 
     if (Array.isArray(fields)) {
       for (const f of fields) {
         if (typeof f !== 'string' || !f.trim()) {
-          throw new BadRequestException('`fields` array must contain non-empty field names');
+          throw new BadRequestException(
+            '`fields` array must contain non-empty field names',
+          );
         }
         add(f.trim());
       }
@@ -182,12 +231,15 @@ export class PseudonymizationService {
     if (fields && typeof fields === 'object') {
       for (const [name, cfg] of Object.entries(fields)) {
         if (cfg === true) add(name);
-        else if (cfg && typeof cfg === 'object' && cfg.enabled !== false) add(name, cfg.prefix);
+        else if (cfg && typeof cfg === 'object' && cfg.enabled !== false)
+          add(name, cfg.prefix);
       }
       return resolved;
     }
 
-    throw new BadRequestException('`fields` must be an array of field names or an object of field configs');
+    throw new BadRequestException(
+      '`fields` must be an array of field names or an object of field configs',
+    );
   }
 
   private assertRecord(obj: unknown): asserts obj is Record<string, any> {

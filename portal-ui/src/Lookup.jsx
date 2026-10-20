@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { isToken } from './Playground.jsx';
+import { isToken } from './json.js';
 import { SearchIcon, SpinnerIcon, AlertIcon, CopyIcon } from './icons.jsx';
 
 const SAMPLE = { id: 'U100', tokens: '' };
@@ -19,9 +19,10 @@ export default function Lookup({ apiBase, onResult, notify }) {
     e?.preventDefault();
     if (!canLookup) return;
     const valid = tokens.filter(isToken);
-    // Each token goes into its own placeholder field; the API resolves tokens regardless of field name
-    const data = { [idField]: recordId.trim(), ...Object.fromEntries(valid.map((t, i) => [`__t${i}`, t])) };
-    const body = { data, ...(idField !== 'id' ? { idField } : {}) };
+    // Each token goes into its own placeholder field; tokens resolve regardless of the field name they sit in
+    const slots = valid.map((_, i) => `__t${i}`);
+    const data = { [idField]: recordId.trim(), ...Object.fromEntries(valid.map((t, i) => [slots[i], t])) };
+    const body = { action: 'deanonymize', data, fields: slots, ...(idField !== 'id' ? { idField } : {}) };
 
     setBusy(true);
     setError(null);
@@ -31,9 +32,9 @@ export default function Lookup({ apiBase, onResult, notify }) {
     let ok = false;
     if (valid.length) {
       try {
-        const res = await fetch(`${apiBase}/pseudonymization/deanonymize`, {
+        const res = await fetch(`${apiBase}/pseudonymization`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json', 'X-Client': 'lookup' },
           body: JSON.stringify(body),
         });
         status = res.status;
@@ -57,7 +58,7 @@ export default function Lookup({ apiBase, onResult, notify }) {
     );
     setBusy(false);
     if (valid.length) {
-      onResult?.({ mode: 'deanonymize', path: '/pseudonymization/deanonymize', body, ok, status, payload, ms: Math.round(performance.now() - started), at: new Date(), records: 1, source: 'lookup' });
+      onResult?.({ mode: 'deanonymize', path: '/pseudonymization', body: { ...body, fields: [] }, ok, status, payload, ms: Math.round(performance.now() - started), at: new Date(), records: 1, source: 'lookup' });
     }
   };
 

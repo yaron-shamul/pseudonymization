@@ -1,0 +1,251 @@
+id,name,email,phone,city,plan
+CUST-10000,Yael Mizrahi,yael.mizrahi0@example.com,+972507624039,Ra'anana,free
+CUST-10001,Noa Avraham,noa.avraham1@example.com,+972502579240,Jerusalem,enterprise
+CUST-10002,Avi Avraham,avi.avraham2@example.com,+972504602037,Tel Aviv,free
+CUST-10003,Roni Katz,roni.katz3@example.com,+972502171979,Haifa,free
+CUST-10004,Roni Levi,roni.levi4@example.com,+972503077052,Haifa,enterprise
+CUST-10005,Avi Golan,avi.golan5@example.com,+972507655194,Tel Aviv,free
+CUST-10006,Avi Avraham,avi.avraham6@example.com,+972503234302,Jerusalem,pro
+CUST-10007,Maya Avraham,maya.avraham7@example.com,+972502976225,Herzliya,pro
+CUST-10008,Eitan Cohen,eitan.cohen8@example.com,+972504151952,Jerusalem,free
+CUST-10009,Noa Golan,noa.golan9@example.com,+972501999941,Herzliya,free
+CUST-10010,Gal Ben-David,gal.bendavid10@example.com,+972509920785,Be'er Sheva,pro
+CUST-10011,Lior Golan,lior.golan11@example.com,+972508603172,Jerusalem,pro
+CUST-10012,Omer Mizrahi,omer.mizrahi12@example.com,+972505095259,Tel Aviv,enterprise
+CUST-10013,Daniel Avraham,daniel.avraham13@example.com,+972509306674,Jerusalem,enterprise
+CUST-10014,Lior Friedman,lior.friedman14@example.com,+972502228106,Tel Aviv,enterprise
+CUST-10015,Roni Mizrahi,roni.mizrahi15@example.com,+972506738744,Haifa,pro
+CUST-10016,Roni Levi,roni.levi16@example.com,+972502302255,Netanya,enterprise
+CUST-10017,Yael Shapiro,yael.shapiro17@example.com,+972506875018,Herzliya,pro
+CUST-10018,Lior Cohen,lior.cohen18@example.com,+972502570280,Jerusalem,pro
+CUST-10019,Noa Levi,noa.levi19@example.com,+972506194349,Ra'anana,enterprise
+CUST-10020,Lior Friedman,lior.friedman20@example.com,+972507472506,Ra'anana,pro
+CUST-10021,Dana Biton,dana.biton21@example.com,+972506963698,Haifa,enterprise
+CUST-10022,Yossi Biton,yossi.biton22@example.com,+972501989091,Haifa,pro
+CUST-10023,Maya Rosen,maya.rosen23@example.com,+972505154287,Be'er Sheva,pro
+CUST-10024,Gal Cohen,gal.cohen24@example.com,+972503791163,Be'er Sheva,pro
+CUST-10025,Shira Mizrahi,shira.mizrahi25@example.com,+972508222954,Netanya,enterprise
+CUST-10026,Shira Rosen,shira.rosen26@example.com,+972507967519,Jerusalem,enterprise
+CUST-10027,Michal Peretz,michal.peretz27@example.com,+972503532032,Tel Aviv,free
+CUST-10028,Maya Peretz,maya.peretz28@example.com,+972504914729,Tel Aviv,pro
+CUST-10029,Eitan Friedman,eitan.friedman29@example.com,+972505730012,Tel Aviv,free
+CUST-10030,Roni Avraham,roni.avraham30@example.com,+972507195046,Herzliya,enterprise
+CUST-10031,Yael Mizrahi,yael.mizrahi31@example.com,+972509648511,Herzliya,enterprise
+CUST-10032,Avi Biton,avi.biton32@example.com,+972507583025,Be'er Sheva,pro
+CUST-10033,Michal Cohen,michal.cohen33@example.com,+972509078612,Ra'anana,pro
+CUST-10034,Avi Peretz,avi.peretz34@example.com,+972502129905,Haifa,pro
+CUST-10035,Eitan Cohen,eitan.cohen35@example.com,+972506705153,Herzliya,free
+CUST-10036,Yossi Levi,yossi.levi36@example.com,+972503537804,Herzliya,free
+CUST-10037,Itai Golan,itai.golan37@example.com,+972501427833,Tel Aviv,free
+CUST-10038,Michal Mizrahi,michal.mizrahi38@example.com,+972505232182,Jerusalem,enterprise
+CUST-10039,Itai Biton,itai.biton39@example.com,+972503060950,Tel Aviv,pro
+CUST-10040,Lior Biton,lior.biton40@example.com,+972509117398,Jerusalem,free
+CUST-10041,Maya Cohen,maya.cohen41@example.com,+972506748475,Ra'anana,pro
+CUST-10042,Gal Rosen,gal.rosen42@example.com,+972503708490,Herzliya,free
+CUST-10043,Tamar Avraham,tamar.avraham43@example.com,+972507069199,Haifa,enterprise
+CUST-10044,Dana Avraham,dana.avraham44@example.com,+972506001115,Ra'anana,free
+CUST-10045,Shira Avraham,shira.avraham45@example.com,+972507152201,Haifa,pro
+CUST-10046,Omer Avraham,omer.avraham46@example.com,+972509433856,Jerusalem,enterprise
+CUST-10047,Omer Golan,omer.golan47@example.com,+972504274007,Netanya,free
+CUST-10048,Michal Rosen,michal.rosen48@example.com,+972504804057,Haifa,enterprise
+CUST-10049,Gal Shapiro,gal.shapiro49@example.com,+972501486206,Tel Aviv,pro
+CUST-10050,Gal Friedman,gal.friedman50@example.com,+972504248823,Ra'anana,enterprise
+CUST-10051,Itai Biton,itai.biton51@example.com,+972506863966,Jerusalem,free
+CUST-10052,Omer Cohen,omer.cohen52@example.com,+972504805841,Be'er Sheva,free
+CUST-10053,Yael Peretz,yael.peretz53@example.com,+972509097578,Herzliya,enterprise
+CUST-10054,Dana Biton,dana.biton54@example.com,+972506771478,Netanya,enterprise
+CUST-10055,Noa Ben-David,noa.bendavid55@example.com,+972503011649,Be'er Sheva,enterprise
+CUST-10056,Tamar Biton,tamar.biton56@example.com,+972503995097,Be'er Sheva,enterprise
+CUST-10057,Yael Cohen,yael.cohen57@example.com,+972507641067,Be'er Sheva,pro
+CUST-10058,Noa Rosen,noa.rosen58@example.com,+972503665162,Haifa,free
+CUST-10059,Dana Mizrahi,dana.mizrahi59@example.com,+972508807342,Netanya,enterprise
+CUST-10060,Maya Golan,maya.golan60@example.com,+972508958388,Ra'anana,pro
+CUST-10061,Maya Avraham,maya.avraham61@example.com,+972503197544,Tel Aviv,free
+CUST-10062,Yossi Avraham,yossi.avraham62@example.com,+972503336239,Be'er Sheva,free
+CUST-10063,Tamar Levi,tamar.levi63@example.com,+972505225087,Haifa,pro
+CUST-10064,Omer Golan,omer.golan64@example.com,+972506469193,Jerusalem,enterprise
+CUST-10065,Roni Mizrahi,roni.mizrahi65@example.com,+972502021808,Ra'anana,pro
+CUST-10066,Lior Ben-David,lior.bendavid66@example.com,+972509669808,Be'er Sheva,enterprise
+CUST-10067,Maya Avraham,maya.avraham67@example.com,+972503547391,Herzliya,enterprise
+CUST-10068,Dana Biton,dana.biton68@example.com,+972504072040,Herzliya,free
+CUST-10069,Maya Mizrahi,maya.mizrahi69@example.com,+972503374965,Be'er Sheva,enterprise
+CUST-10070,Yossi Avraham,yossi.avraham70@example.com,+972502036081,Jerusalem,enterprise
+CUST-10071,Gal Cohen,gal.cohen71@example.com,+972501953324,Haifa,free
+CUST-10072,Shira Levi,shira.levi72@example.com,+972502639893,Herzliya,pro
+CUST-10073,Dana Cohen,dana.cohen73@example.com,+972508436474,Jerusalem,enterprise
+CUST-10074,Tamar Rosen,tamar.rosen74@example.com,+972505650401,Be'er Sheva,enterprise
+CUST-10075,Gal Avraham,gal.avraham75@example.com,+972505154974,Ra'anana,enterprise
+CUST-10076,Shira Avraham,shira.avraham76@example.com,+972504398871,Netanya,pro
+CUST-10077,Maya Katz,maya.katz77@example.com,+972503040477,Be'er Sheva,pro
+CUST-10078,Yael Cohen,yael.cohen78@example.com,+972505037248,Be'er Sheva,free
+CUST-10079,Tamar Ben-David,tamar.bendavid79@example.com,+972506079806,Netanya,free
+CUST-10080,Maya Rosen,maya.rosen80@example.com,+972507143536,Haifa,pro
+CUST-10081,Maya Biton,maya.biton81@example.com,+972504684072,Ra'anana,free
+CUST-10082,Michal Biton,michal.biton82@example.com,+972503731249,Ra'anana,free
+CUST-10083,Eitan Rosen,eitan.rosen83@example.com,+972508239734,Herzliya,pro
+CUST-10084,Yael Katz,yael.katz84@example.com,+972504284050,Jerusalem,pro
+CUST-10085,Noa Rosen,noa.rosen85@example.com,+972507139664,Tel Aviv,pro
+CUST-10086,Lior Biton,lior.biton86@example.com,+972501303365,Be'er Sheva,pro
+CUST-10087,Daniel Avraham,daniel.avraham87@example.com,+972502078620,Tel Aviv,free
+CUST-10088,Yossi Cohen,yossi.cohen88@example.com,+972505455429,Jerusalem,free
+CUST-10089,Eitan Friedman,eitan.friedman89@example.com,+972503173581,Netanya,pro
+CUST-10090,Shira Katz,shira.katz90@example.com,+972503505978,Herzliya,enterprise
+CUST-10091,Gal Rosen,gal.rosen91@example.com,+972506486963,Tel Aviv,pro
+CUST-10092,Avi Rosen,avi.rosen92@example.com,+972504076002,Be'er Sheva,free
+CUST-10093,Shira Levi,shira.levi93@example.com,+972502485889,Netanya,pro
+CUST-10094,Noa Golan,noa.golan94@example.com,+972504731386,Tel Aviv,pro
+CUST-10095,Yossi Biton,yossi.biton95@example.com,+972501193715,Jerusalem,enterprise
+CUST-10096,Roni Friedman,roni.friedman96@example.com,+972503168032,Tel Aviv,enterprise
+CUST-10097,Omer Cohen,omer.cohen97@example.com,+972503708666,Jerusalem,free
+CUST-10098,Eitan Peretz,eitan.peretz98@example.com,+972506234363,Ra'anana,pro
+CUST-10099,Tamar Friedman,tamar.friedman99@example.com,+972508477384,Herzliya,enterprise
+CUST-10100,Eitan Friedman,eitan.friedman100@example.com,+972506821711,Netanya,free
+CUST-10101,Shira Levi,shira.levi101@example.com,+972501257465,Tel Aviv,enterprise
+CUST-10102,Tamar Avraham,tamar.avraham102@example.com,+972508965161,Haifa,pro
+CUST-10103,Yossi Ben-David,yossi.bendavid103@example.com,+972508250736,Ra'anana,pro
+CUST-10104,Michal Avraham,michal.avraham104@example.com,+972506163742,Ra'anana,free
+CUST-10105,Omer Shapiro,omer.shapiro105@example.com,+972504332365,Netanya,enterprise
+CUST-10106,Maya Katz,maya.katz106@example.com,+972506830957,Tel Aviv,free
+CUST-10107,Dana Cohen,dana.cohen107@example.com,+972505288153,Be'er Sheva,free
+CUST-10108,Avi Cohen,avi.cohen108@example.com,+972507390135,Netanya,enterprise
+CUST-10109,Daniel Golan,daniel.golan109@example.com,+972505063658,Ra'anana,pro
+CUST-10110,Avi Biton,avi.biton110@example.com,+972504109691,Haifa,pro
+CUST-10111,Lior Levi,lior.levi111@example.com,+972505416485,Jerusalem,pro
+CUST-10112,Yael Peretz,yael.peretz112@example.com,+972501577920,Jerusalem,free
+CUST-10113,Itai Mizrahi,itai.mizrahi113@example.com,+972501017933,Jerusalem,pro
+CUST-10114,Noa Biton,noa.biton114@example.com,+972505679649,Herzliya,enterprise
+CUST-10115,Tamar Peretz,tamar.peretz115@example.com,+972509468058,Netanya,free
+CUST-10116,Noa Friedman,noa.friedman116@example.com,+972502505812,Haifa,pro
+CUST-10117,Avi Katz,avi.katz117@example.com,+972501377389,Jerusalem,pro
+CUST-10118,Omer Cohen,omer.cohen118@example.com,+972509878327,Netanya,free
+CUST-10119,Michal Shapiro,michal.shapiro119@example.com,+972509291145,Haifa,pro
+CUST-10120,Maya Levi,maya.levi120@example.com,+972509606396,Ra'anana,pro
+CUST-10121,Maya Avraham,maya.avraham121@example.com,+972509461942,Herzliya,free
+CUST-10122,Omer Cohen,omer.cohen122@example.com,+972501522786,Tel Aviv,free
+CUST-10123,Itai Cohen,itai.cohen123@example.com,+972507318605,Netanya,pro
+CUST-10124,Avi Ben-David,avi.bendavid124@example.com,+972501316094,Ra'anana,enterprise
+CUST-10125,Omer Biton,omer.biton125@example.com,+972505425710,Tel Aviv,pro
+CUST-10126,Noa Rosen,noa.rosen126@example.com,+972509438453,Herzliya,free
+CUST-10127,Noa Rosen,noa.rosen127@example.com,+972508950025,Jerusalem,free
+CUST-10128,Shira Peretz,shira.peretz128@example.com,+972504442978,Haifa,enterprise
+CUST-10129,Lior Biton,lior.biton129@example.com,+972507418299,Tel Aviv,pro
+CUST-10130,Daniel Levi,daniel.levi130@example.com,+972504326756,Tel Aviv,enterprise
+CUST-10131,Maya Shapiro,maya.shapiro131@example.com,+972505260410,Ra'anana,enterprise
+CUST-10132,Daniel Golan,daniel.golan132@example.com,+972503238768,Tel Aviv,pro
+CUST-10133,Avi Biton,avi.biton133@example.com,+972505509258,Ra'anana,free
+CUST-10134,Tamar Ben-David,tamar.bendavid134@example.com,+972509214365,Jerusalem,enterprise
+CUST-10135,Daniel Biton,daniel.biton135@example.com,+972508816464,Be'er Sheva,free
+CUST-10136,Tamar Friedman,tamar.friedman136@example.com,+972502440395,Be'er Sheva,free
+CUST-10137,Daniel Biton,daniel.biton137@example.com,+972502282857,Netanya,enterprise
+CUST-10138,Lior Friedman,lior.friedman138@example.com,+972507490238,Haifa,free
+CUST-10139,Noa Golan,noa.golan139@example.com,+972502515034,Haifa,enterprise
+CUST-10140,Shira Shapiro,shira.shapiro140@example.com,+972503224743,Herzliya,enterprise
+CUST-10141,Shira Cohen,shira.cohen141@example.com,+972507126846,Haifa,pro
+CUST-10142,Gal Katz,gal.katz142@example.com,+972501416652,Haifa,free
+CUST-10143,Gal Ben-David,gal.bendavid143@example.com,+972508562502,Be'er Sheva,pro
+CUST-10144,Maya Katz,maya.katz144@example.com,+972506770693,Be'er Sheva,pro
+CUST-10145,Yossi Shapiro,yossi.shapiro145@example.com,+972501029215,Jerusalem,pro
+CUST-10146,Michal Cohen,michal.cohen146@example.com,+972504283991,Ra'anana,free
+CUST-10147,Daniel Friedman,daniel.friedman147@example.com,+972507244848,Tel Aviv,pro
+CUST-10148,Michal Golan,michal.golan148@example.com,+972502281790,Jerusalem,pro
+CUST-10149,Shira Levi,shira.levi149@example.com,+972505708319,Tel Aviv,free
+CUST-10150,Daniel Ben-David,daniel.bendavid150@example.com,+972503498368,Haifa,pro
+CUST-10151,Roni Avraham,roni.avraham151@example.com,+972506294912,Haifa,pro
+CUST-10152,Roni Levi,roni.levi152@example.com,+972507711585,Herzliya,enterprise
+CUST-10153,Tamar Rosen,tamar.rosen153@example.com,+972502351856,Tel Aviv,enterprise
+CUST-10154,Roni Biton,roni.biton154@example.com,+972503324861,Ra'anana,pro
+CUST-10155,Gal Levi,gal.levi155@example.com,+972503135929,Haifa,pro
+CUST-10156,Roni Shapiro,roni.shapiro156@example.com,+972505726914,Jerusalem,pro
+CUST-10157,Shira Katz,shira.katz157@example.com,+972505004134,Jerusalem,pro
+CUST-10158,Michal Cohen,michal.cohen158@example.com,+972503807372,Ra'anana,free
+CUST-10159,Noa Peretz,noa.peretz159@example.com,+972509398754,Netanya,pro
+CUST-10160,Omer Biton,omer.biton160@example.com,+972506584032,Netanya,pro
+CUST-10161,Roni Mizrahi,roni.mizrahi161@example.com,+972504228055,Haifa,free
+CUST-10162,Eitan Shapiro,eitan.shapiro162@example.com,+972502528309,Jerusalem,free
+CUST-10163,Itai Friedman,itai.friedman163@example.com,+972504391377,Tel Aviv,enterprise
+CUST-10164,Roni Katz,roni.katz164@example.com,+972507943814,Ra'anana,enterprise
+CUST-10165,Tamar Katz,tamar.katz165@example.com,+972505533872,Jerusalem,free
+CUST-10166,Gal Friedman,gal.friedman166@example.com,+972507042234,Haifa,enterprise
+CUST-10167,Tamar Cohen,tamar.cohen167@example.com,+972505546975,Haifa,pro
+CUST-10168,Michal Ben-David,michal.bendavid168@example.com,+972508480262,Be'er Sheva,pro
+CUST-10169,Dana Mizrahi,dana.mizrahi169@example.com,+972501540956,Be'er Sheva,enterprise
+CUST-10170,Gal Golan,gal.golan170@example.com,+972509217889,Tel Aviv,free
+CUST-10171,Michal Avraham,michal.avraham171@example.com,+972508854277,Be'er Sheva,free
+CUST-10172,Yossi Peretz,yossi.peretz172@example.com,+972503590039,Haifa,enterprise
+CUST-10173,Yossi Rosen,yossi.rosen173@example.com,+972508672641,Tel Aviv,enterprise
+CUST-10174,Avi Levi,avi.levi174@example.com,+972503108086,Haifa,enterprise
+CUST-10175,Avi Ben-David,avi.bendavid175@example.com,+972506096620,Haifa,enterprise
+CUST-10176,Shira Avraham,shira.avraham176@example.com,+972508338866,Ra'anana,free
+CUST-10177,Yossi Cohen,yossi.cohen177@example.com,+972506039024,Herzliya,enterprise
+CUST-10178,Tamar Katz,tamar.katz178@example.com,+972505376871,Haifa,enterprise
+CUST-10179,Dana Levi,dana.levi179@example.com,+972506058687,Be'er Sheva,pro
+CUST-10180,Yael Ben-David,yael.bendavid180@example.com,+972505066085,Be'er Sheva,enterprise
+CUST-10181,Omer Avraham,omer.avraham181@example.com,+972505144951,Tel Aviv,pro
+CUST-10182,Daniel Levi,daniel.levi182@example.com,+972501365531,Haifa,pro
+CUST-10183,Roni Cohen,roni.cohen183@example.com,+972505316041,Haifa,enterprise
+CUST-10184,Roni Shapiro,roni.shapiro184@example.com,+972504804838,Be'er Sheva,free
+CUST-10185,Yael Rosen,yael.rosen185@example.com,+972508055773,Jerusalem,enterprise
+CUST-10186,Michal Peretz,michal.peretz186@example.com,+972501113304,Netanya,pro
+CUST-10187,Noa Peretz,noa.peretz187@example.com,+972509316392,Haifa,pro
+CUST-10188,Tamar Peretz,tamar.peretz188@example.com,+972508803319,Haifa,pro
+CUST-10189,Daniel Cohen,daniel.cohen189@example.com,+972509317551,Herzliya,free
+CUST-10190,Omer Biton,omer.biton190@example.com,+972507996586,Ra'anana,free
+CUST-10191,Maya Katz,maya.katz191@example.com,+972501911982,Haifa,free
+CUST-10192,Maya Katz,maya.katz192@example.com,+972501869739,Ra'anana,free
+CUST-10193,Eitan Katz,eitan.katz193@example.com,+972508543740,Ra'anana,pro
+CUST-10194,Yossi Cohen,yossi.cohen194@example.com,+972503778873,Jerusalem,free
+CUST-10195,Eitan Ben-David,eitan.bendavid195@example.com,+972509804642,Ra'anana,pro
+CUST-10196,Avi Friedman,avi.friedman196@example.com,+972507352179,Netanya,pro
+CUST-10197,Yael Biton,yael.biton197@example.com,+972503839727,Tel Aviv,free
+CUST-10198,Noa Friedman,noa.friedman198@example.com,+972502354977,Jerusalem,pro
+CUST-10199,Yossi Avraham,yossi.avraham199@example.com,+972504479635,Be'er Sheva,pro
+CUST-10200,Daniel Katz,daniel.katz200@example.com,+972502472372,Tel Aviv,enterprise
+CUST-10201,Gal Peretz,gal.peretz201@example.com,+972507253109,Herzliya,pro
+CUST-10202,Tamar Shapiro,tamar.shapiro202@example.com,+972507111081,Ra'anana,pro
+CUST-10203,Dana Ben-David,dana.bendavid203@example.com,+972507892111,Haifa,enterprise
+CUST-10204,Michal Levi,michal.levi204@example.com,+972507300979,Tel Aviv,pro
+CUST-10205,Noa Levi,noa.levi205@example.com,+972505312012,Haifa,enterprise
+CUST-10206,Noa Golan,noa.golan206@example.com,+972506688642,Jerusalem,pro
+CUST-10207,Yael Golan,yael.golan207@example.com,+972501731244,Jerusalem,enterprise
+CUST-10208,Yael Friedman,yael.friedman208@example.com,+972505989642,Tel Aviv,enterprise
+CUST-10209,Noa Levi,noa.levi209@example.com,+972504923624,Tel Aviv,pro
+CUST-10210,Lior Katz,lior.katz210@example.com,+972505211866,Be'er Sheva,pro
+CUST-10211,Maya Biton,maya.biton211@example.com,+972504069211,Tel Aviv,enterprise
+CUST-10212,Daniel Rosen,daniel.rosen212@example.com,+972503538648,Herzliya,free
+CUST-10213,Yael Shapiro,yael.shapiro213@example.com,+972508730625,Jerusalem,enterprise
+CUST-10214,Noa Avraham,noa.avraham214@example.com,+972504310342,Be'er Sheva,free
+CUST-10215,Omer Katz,omer.katz215@example.com,+972502086039,Ra'anana,free
+CUST-10216,Gal Avraham,gal.avraham216@example.com,+972506465318,Haifa,pro
+CUST-10217,Yossi Cohen,yossi.cohen217@example.com,+972505444138,Herzliya,free
+CUST-10218,Tamar Cohen,tamar.cohen218@example.com,+972508064219,Be'er Sheva,enterprise
+CUST-10219,Lior Mizrahi,lior.mizrahi219@example.com,+972504929161,Haifa,pro
+CUST-10220,Lior Golan,lior.golan220@example.com,+972504941526,Ra'anana,enterprise
+CUST-10221,Yossi Friedman,yossi.friedman221@example.com,+972505928846,Jerusalem,enterprise
+CUST-10222,Shira Shapiro,shira.shapiro222@example.com,+972505262360,Ra'anana,pro
+CUST-10223,Tamar Biton,tamar.biton223@example.com,+972505151171,Haifa,free
+CUST-10224,Omer Mizrahi,omer.mizrahi224@example.com,+972505720338,Herzliya,free
+CUST-10225,Yael Cohen,yael.cohen225@example.com,+972507644945,Jerusalem,free
+CUST-10226,Omer Ben-David,omer.bendavid226@example.com,+972502686822,Ra'anana,pro
+CUST-10227,Avi Cohen,avi.cohen227@example.com,+972501075364,Be'er Sheva,free
+CUST-10228,Lior Shapiro,lior.shapiro228@example.com,+972501677159,Jerusalem,free
+CUST-10229,Yossi Levi,yossi.levi229@example.com,+972504180510,Herzliya,enterprise
+CUST-10230,Tamar Cohen,tamar.cohen230@example.com,+972507245099,Herzliya,free
+CUST-10231,Lior Golan,lior.golan231@example.com,+972505361207,Netanya,enterprise
+CUST-10232,Dana Cohen,dana.cohen232@example.com,+972506866986,Haifa,free
+CUST-10233,Itai Shapiro,itai.shapiro233@example.com,+972503371786,Tel Aviv,free
+CUST-10234,Shira Levi,shira.levi234@example.com,+972504413186,Netanya,free
+CUST-10235,Yael Katz,yael.katz235@example.com,+972507237924,Haifa,enterprise
+CUST-10236,Daniel Cohen,daniel.cohen236@example.com,+972504412616,Tel Aviv,pro
+CUST-10237,Gal Cohen,gal.cohen237@example.com,+972507847957,Tel Aviv,pro
+CUST-10238,Maya Ben-David,maya.bendavid238@example.com,+972509958985,Tel Aviv,enterprise
+CUST-10239,Eitan Katz,eitan.katz239@example.com,+972505549425,Be'er Sheva,pro
+CUST-10240,Daniel Katz,daniel.katz240@example.com,+972501861689,Jerusalem,enterprise
+CUST-10241,Itai Katz,itai.katz241@example.com,+972507986794,Tel Aviv,pro
+CUST-10242,Tamar Katz,tamar.katz242@example.com,+972507794326,Haifa,free
+CUST-10243,Roni Mizrahi,roni.mizrahi243@example.com,+972508109425,Tel Aviv,free
+CUST-10244,Michal Golan,michal.golan244@example.com,+972507119105,Be'er Sheva,free
+CUST-10245,Maya Levi,maya.levi245@example.com,+972501867304,Herzliya,free
+CUST-10246,Michal Cohen,michal.cohen246@example.com,+972507221723,Ra'anana,enterprise
+CUST-10247,Eitan Mizrahi,eitan.mizrahi247@example.com,+972506837547,Jerusalem,free
+CUST-10248,Eitan Cohen,eitan.cohen248@example.com,+972502825241,Be'er Sheva,pro
+CUST-10249,Tamar Friedman,tamar.friedman249@example.com,+972503124840,Netanya,free
